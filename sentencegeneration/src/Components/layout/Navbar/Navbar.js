@@ -5,29 +5,31 @@ import { Link } from 'react-router-dom';
 const Navbar = (props) => {
 
     return (
-        <nav className="navbar bg-primary">
+        <nav className="c-navbar bg-primary">
             <h1>
                 <i className={props.icon} />
                 {props.title}
             </h1>
             <ul>
-                <li>
+                <li><b>
                     <Link to='/'>About</Link>
-                </li>
-                <li>
+                </b></li>
+                <li><b>
                     <Link to='/home'>Home</Link>
-                </li>
+                </b></li>
                 
             </ul>
         </nav>
     )
 }
 
+// setting up the default props
 Navbar.defaultProps = {
   title: "Make Sentence",
   icon: "fab fa-leanpub"
 }
 
+// setting up the type and restriction for default props
 Navbar.propTypes = {
     title: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired

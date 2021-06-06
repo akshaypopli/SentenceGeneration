@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+// css
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,7 +22,6 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={About} /> 
               <Route exact path="/home" component={Home} />
-                
             </Switch>
             
           </div>

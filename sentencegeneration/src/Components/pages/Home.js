@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import Spinner from '../layout/Spinner/Spinner';
 import axios from 'axios';
 
+// components
 import MoreOptions from '../layout/MoreOptions/MoreOptions';
 import Alert from '../layout/Alert/Alert';
+import Spinner from '../layout/Spinner/Spinner';
 
 class Home extends Component {
+
+    // maintaining the state here
     state={
         loading: false,
         alert: null,
@@ -32,6 +35,7 @@ class Home extends Component {
         }, 2000);
     }
     
+    // function called when Make Sentence button pressed 
     makeSentence = () => {
         if(this.state.obj==="" || this.state.verb==="" || this.setState.noun===""){
             this.setAlert(["Verb/Object/Noun are required fields"]);
@@ -50,6 +54,7 @@ class Home extends Component {
         }
     }
 
+    // create a string of optional params to concatinate with API url
     processPrms = (list) => {
         let prms = "";
 
@@ -67,22 +72,29 @@ class Home extends Component {
         return prms;
     }
 
+    // set the list into state when any value of optional params entered into textfield
     handleTextChange = (list) => {
         this.setState({optionalParams: list });
     };
 
+    // set the list into state when any key of optional params selected
     handleDropdownChange = (list) => {
         this.setState({optionalParams: list });
     };
 
+    /* set the list into state when any value of optional params selected
+     * (handling if the value of optional parameter is selected from a dropdown)
+    */
     handleSubDropdownChange = (list) => {
         this.setState({optionalParams: list });
     };
 
+    // handler for adding more optional parameter
     handleAddInput = (list) => {
         this.setState({optionalParams: list });
-      }
+    }
     
+    // handler for removing any optional parameter
     handleRemoveInput = (list) => {
         this.setState({optionalParams: list});
     }
