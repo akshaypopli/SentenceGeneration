@@ -2,8 +2,15 @@ import React from 'react';
 import Select from 'react-select';
 
 const moreOptions = [
-    { value: "subjdet", label: "Subject's Determiner" },
-    { value: "subjnum", label: "Subject's Number" },
+    { value: "subjdet", label: "Subject's Determiner", type:"dropdown", values: [
+        { value: "a", label: "a" },
+        { value: "the", label: "the" },
+        { value: "-", label: "-" },
+    ]},
+    { value: "subjnum", label: "Subject's Number", type:"dropdown", values: [
+        { value: "singular", label: "Singular" },
+        { value: "plural", label: "Plural" },
+    ] },
     { value: "objdet", label: "Object's Determiner" },
     { value: "objnum", label: "Object's Number" },
     { value: "objmod", label: "Object's Modifier" },
@@ -12,10 +19,18 @@ const moreOptions = [
         { value: "present", label: "Present" },
         { value: "future", label: "Future" },
     ]},
-    { value: "progressive", label: "Progressive" },
-    { value: "perfect", label: "Perfect" },
-    { value: "negated", label: "Negated" },
-    { value: "passive", label: "Passive" },
+    { value: "progressive", label: "Progressive", type:"dropdown", values: [
+        { value: "progressive", label: "Progressive" },
+    ]},
+    { value: "perfect", label: "Perfect", type:"dropdown", values: [
+        { value: "perfect", label: "Perfect" },
+    ]},
+    { value: "negated", label: "Negated", type:"dropdown", values: [
+        { value: "negated", label: "Negated" },
+    ]},
+    { value: "passive", label: "Passive", type:"dropdown", values: [
+        { value: "passive", label: "Passive" },
+    ]},
     { value: "sentencetype", label: "Sentence Type", type:"dropdown" , values: [
         { value: "yesno", label: "Yes/No" },
         { value: "whatobj", label: "What Object" },
