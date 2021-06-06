@@ -81,20 +81,18 @@ const MoreOptions = (props) => {
                 <div key={i} className="row col-sm-12 c-border bg-light p m-1">
                     <div className="col-sm-4 m-1 p-0">
                         <Select
-                        value={item.selectedOption}
-                        onChange={(e)=>handleDropdownChange(e,i)}
-                        options={moreOptions}
-                        placeholder="Select"
-                        />
+                            value={item.selectedOption}
+                            onChange={(e)=>handleDropdownChange(e,i)}
+                            options={moreOptions}
+                            placeholder="Select"/>
                     </div>
 
                     {item.selectedOption?.type==="dropdown"? <div className="col-sm-3 m-1 p-0"><Select
-                        
                         value={item.selectedSubOption}
                         onChange={(e)=>handleSubDropdownChange(e,i)}
                         options={item.selectedOption.values}
                         placeholder="Select"
-                        /></div>:<div className="col-sm-3 m-1 p-0 ">
+                        /></div> : <div className="col-sm-3 m-1 p-0 ">
                         <input placeholder="Enter Value" 
                         type="text" 
                         name="text" 

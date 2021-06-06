@@ -3,11 +3,12 @@ import Spinner from '../layout/Spinner/Spinner';
 import axios from 'axios';
 
 import MoreOptions from '../layout/MoreOptions/MoreOptions';
+import Alert from '../layout/Alert/Alert';
 
 class Home extends Component {
     state={
         loading: false,
-        // alert: null,
+        alert: null,
         obj: "",
         verb: "",
         noun: "",
@@ -21,29 +22,46 @@ class Home extends Component {
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     };
+
+    // alert if nothing entered and click Make Sentence
+    setAlert = (msg) => {
+        this.setState({alert: {msg: msg}});
+
+        setTimeout(() => {
+        this.setState({alert: null});
+        }, 2000);
+    }
     
     makeSentence = () => {
-        let prms = this.processPrms([...this.state.optionalParams]);
-        this.setState({loading: true});
-
-        axios.get("https://lt-nlgservice.herokuapp.com/rest/english/realise?subject="+ 
-            this.state.noun + "&verb=" + this.state.verb + "&object=" + this.state.obj + prms).then((res)=>{
-                this.setState({sentenceCreated: res.data.sentence});
-                this.setState({loading: false});
-            }).then((e)=>{
-                console.log(e);
-        })
+        if(this.state.obj==="" || this.state.verb==="" || this.setState.noun===""){
+            this.setAlert(["Verb/Object/Noun are required fields"]);
+            return;
+        }else {
+            let prms = this.processPrms([...this.state.optionalParams]);
+            this.setState({loading: true});
+    
+            axios.get("https://lt-nlgservice.herokuapp.com/rest/english/realise?subject="+ 
+                this.state.noun + "&verb=" + this.state.verb + "&object=" + this.state.obj + prms).then((res)=>{
+                    this.setState({sentenceCreated: res.data.sentence});
+                    this.setState({loading: false});
+                }).then((e)=>{
+                    console.log(e);
+            })
+        }
     }
 
     processPrms = (list) => {
         let prms = "";
 
         for(let i=0;i<list.length;i++){
-            if(list[i].selectedSubOption){
-                prms += "&"+ list[i].selectedOption.value + "=" + list[i].selectedSubOption.value;
-            }else {
-                prms += "&"+ list[i].selectedOption.value + "=" + list[i].text;
+            if(list[i].selectedOption!==null){
+                if(list[i].selectedSubOption){
+                    prms += "&"+ list[i].selectedOption.value + "=" + list[i].selectedSubOption.value;
+                }else {
+                    prms += "&"+ list[i].selectedOption.value + "=" + list[i].text;
+                }
             }
+            
         }
 
         return prms;
@@ -72,7 +90,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                
+                <Alert alert={this.state.alert} />
                 <input 
                     placeholder="Enter Noun" 
                     type="text" 
