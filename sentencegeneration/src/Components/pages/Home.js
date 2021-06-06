@@ -11,9 +11,8 @@ class Home extends Component {
         obj: "",
         verb: "",
         noun: "",
-        inputList:[
-            {selectedOption:null, text:"", selectedSubOption:null},
-            
+        optionalParams:[
+            {selectedOption:null, text:"", selectedSubOption:null},  
         ],
 
         sentenceCreated: ""
@@ -24,9 +23,9 @@ class Home extends Component {
     };
     
     makeSentence = () => {
-        let prms = this.processPrms([...this.state.inputList]);
+        let prms = this.processPrms([...this.state.optionalParams]);
         this.setState({loading: true});
-        console.log(prms);
+
         axios.get("https://lt-nlgservice.herokuapp.com/rest/english/realise?subject="+ 
             this.state.noun + "&verb=" + this.state.verb + "&object=" + this.state.obj + prms).then((res)=>{
                 this.setState({sentenceCreated: res.data.sentence});
@@ -51,34 +50,52 @@ class Home extends Component {
     }
 
     handleTextChange = (list) => {
-        this.setState({inputList: list });
+        this.setState({optionalParams: list });
     };
 
     handleDropdownChange = (list) => {
-        this.setState({inputList: list });
+        this.setState({optionalParams: list });
     };
 
     handleSubDropdownChange = (list) => {
-        this.setState({inputList: list });
+        this.setState({optionalParams: list });
     };
 
     handleAddInput = (list) => {
-        this.setState({inputList: list });
+        this.setState({optionalParams: list });
       }
     
     handleRemoveInput = (list) => {
-        this.setState({inputList: list});
+        this.setState({optionalParams: list});
     }
 
     render() {
         return (
             <div>
                 
-                <input placeholder="Enter Noun" type="text" name="noun" text={this.state.noun} onChange={this.onChange} required/>
+                <input 
+                    placeholder="Enter Noun" 
+                    type="text" 
+                    name="noun" 
+                    className="m-1"
+                    text={this.state.noun} 
+                    onChange={this.onChange}/>
 
-                <input placeholder="Enter Verb" type="text" name="verb" text={this.state.verb} onChange={this.onChange} required/>
+                <input 
+                    placeholder="Enter Verb" 
+                    type="text" 
+                    name="verb" 
+                    className="m-1"
+                    text={this.state.verb} 
+                    onChange={this.onChange}/>
 
-                <input placeholder="Enter Object" type="text" name="obj" text={this.state.obj} onChange={this.onChange} required/> 
+                <input 
+                    placeholder="Enter Object" 
+                    type="text" 
+                    name="obj" 
+                    className="m-1"
+                    text={this.state.obj} 
+                    onChange={this.onChange} /> 
                 
                 <MoreOptions 
                     handleDropdownChange={this.handleDropdownChange} 
@@ -86,12 +103,20 @@ class Home extends Component {
                     handleTextChange = {this.handleTextChange} 
                     handleAddInput = {this.handleAddInput}
                     handleRemoveInput = {this.handleRemoveInput}
-                    inputList = {this.state.inputList}></MoreOptions>
+                    optionalParams = {this.state.optionalParams}></MoreOptions>
                 
-                <button className="btn btn-primary" onClick={this.makeSentence}> Make Sentence </button>
-                {this.state.loading?<Spinner></Spinner>:
-                <div>
-                {this.state.sentenceCreated.length>0 && <div style={{margin: '10px 0', fontSize:'30px'}}><mark>{this.state.sentenceCreated}</mark></div>}</div>}
+                <div className="m-2 align-center">
+                    <button 
+                        className="btn btn-success " 
+                        onClick={this.makeSentence}> 
+                            Make Sentence 
+                    </button>
+                </div>
+                {this.state.loading?<Spinner></Spinner>:<div>
+                    {this.state.sentenceCreated.length>0 && <div style={{margin: '10px 0', fontSize:'30px'}}>
+                        <mark>{this.state.sentenceCreated}</mark>
+                        </div>}
+                </div>}
             </div>
         )
     }

@@ -27,31 +27,31 @@ const moreOptions = [
 const MoreOptions = (props) => {
     
     const handleDropdownChange = (selectedOption, index) => {
-        const list = [...props.inputList];
+        const list = [...props.optionalParams];
         list[index].selectedOption = selectedOption;
         props.handleDropdownChange(list);
     };
 
     const handleSubDropdownChange = (selectedOption, index) => {
-        const list = [...props.inputList];
+        const list = [...props.optionalParams];
         list[index].selectedSubOption = selectedOption;
         props.handleSubDropdownChange(list);
     };
 
     const handleTextChange = (e, index) => {
         const {name, value} = e.target;
-        const list = [...props.inputList];
+        const list = [...props.optionalParams];
         list[index][name] = value;
         props.handleTextChange(list);
     };
 
     const handleAddInput = () => {
-        const list = [...props.inputList, {selectedOption:null, text:""}];
+        const list = [...props.optionalParams, {selectedOption:null, text:""}];
         props.handleAddInput(list);
     }
 
     const handleRemoveInput = (index) => {
-        const list = [...props.inputList];
+        const list = [...props.optionalParams];
         list.splice(index, 1);
         props.handleRemoveInput(list);
     }
@@ -60,11 +60,11 @@ const MoreOptions = (props) => {
 
     return (
         <div>
-            <label>Optional Parameters:</label>
-            {props.inputList.map((item, i)=>{
+            <label className="m-1"><b>Optional Parameters: </b></label>
+            {props.optionalParams.map((item, i)=>{
                 return (
-                <div key={i} className="row col-sm-12 c-border" style={{marginBottom: "10px"}}>
-                    <div className="col-sm-4">
+                <div key={i} className="row col-sm-12 c-border bg-light p m-1">
+                    <div className="col-sm-4 m-1 p-0">
                         <Select
                         value={item.selectedOption}
                         onChange={(e)=>handleDropdownChange(e,i)}
@@ -72,13 +72,14 @@ const MoreOptions = (props) => {
                         placeholder="Select"
                         />
                     </div>
-                    {item.selectedOption?.type==="dropdown"? <div className="col-sm-3"><Select
+
+                    {item.selectedOption?.type==="dropdown"? <div className="col-sm-3 m-1 p-0"><Select
                         
                         value={item.selectedSubOption}
                         onChange={(e)=>handleSubDropdownChange(e,i)}
                         options={item.selectedOption.values}
                         placeholder="Select"
-                        /></div>:<div className="col-sm-3">
+                        /></div>:<div className="col-sm-3 m-1 p-0 ">
                         <input placeholder="Enter Value" 
                         type="text" 
                         name="text" 
@@ -86,19 +87,17 @@ const MoreOptions = (props) => {
                         onChange={(e)=>handleTextChange(e,i)}/>
                     </div>}
                     
-                    {props.inputList.length !== 1  && <input 
+                    {props.optionalParams.length !== 1  && <input 
                         type="button"
                         value="Remove"
-                        className="col-sm-2 btn btn-primary"
-                        style={{height: "60px"}}
+                        className="col-sm-2 btn btn-danger m-1"
                         onClick={()=>handleRemoveInput(i)}
                     />}
 
-                    {props.inputList.length-1 === i && <input 
+                    {props.optionalParams.length-1 === i && <input 
                         type="button"
                         value="Add"
-                        className="col-sm-2 btn btn-primary mr5"
-                        style={{height: "60px"}}
+                        className="col-sm-2 btn btn-primary m-1"
                         onClick={handleAddInput}
                     />}
                     
