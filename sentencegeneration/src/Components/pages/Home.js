@@ -50,6 +50,7 @@ class Home extends Component {
                     this.setState({loading: false});
                 }).then((e)=>{
                     console.log(e);
+                    this.setState({loading: false});
             })
         }
     }
